@@ -1,0 +1,235 @@
+<html>
+ <head>
+  <title>Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+   body {
+     font-family: 'Roboto', sans-serif;
+     margin: 0;
+     padding: 0;
+     background-color: #f4f4f4;
+   }
+   .sidebar {
+     width: 250px;
+     height: 100vh;
+     background-color: #333;
+     color: #fff;
+     position: fixed;
+     top: 0;
+     left: 0;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+   }
+   .sidebar h2 {
+     margin: 20px 0;
+   }
+   .sidebar a {
+     color: #fff;
+     text-decoration: none;
+     width: 100%;
+     padding: 15px;
+     text-align: center;
+     display: block;
+   }
+   .sidebar a:hover {
+     background-color: #575757;
+   }
+   .main-content {
+     margin-left: 250px;
+     padding: 20px;
+   }
+   .header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     background-color: #fff;
+     padding: 10px 20px;
+     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+   }
+   .header h1 {
+     margin: 0;
+   }
+   .header .user-info {
+     display: flex;
+     align-items: center;
+   }
+   .header .user-info img {
+     border-radius: 50%;
+     width: 40px;
+     height: 40px;
+     margin-right: 10px;
+   }
+   .content {
+     margin-top: 20px;
+   }
+   #home-content, #analytics-content, #settings-content {
+     display: none;
+   }
+   table {
+     width: 100%;
+     border-collapse: collapse;
+     margin-bottom: 20px;
+   }
+   th, td {
+     border: 1px solid #000;
+     padding: 8px;
+     text-align: center;
+   }
+   th {
+     background-color: #d9e1f2;
+   }
+  </style>
+ </head>
+ <body>
+  <div class="sidebar">
+   <h2>Dashboard</h2>
+   <a href="#" id="home-link"><i class="fas fa-home"></i> Home</a>
+   <a href="#" id="analytics-link"><i class="fas fa-chart-line"></i> Analytics</a>
+   <a href="#" id="settings-link"><i class="fas fa-cogs"></i> Settings</a>
+   <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+  <div class="main-content">
+   <div class="header">
+    <h1>Welcome to the Dashboard</h1>
+    <div class="user-info">
+     <img alt="User profile picture" src="https://tse1.mm.bing.net/th?id=OIP.c5250XmWSrtf83XF3-XgPwHaJP&pid=Api&P=0&w=300&h=300?v=1710262761&width=1445" />
+     <span>Rikha Lutfiati</span>
+    </div>
+   </div>
+   <div id="home-content" class="content">
+    <h2>Home</h2>
+    <table>
+      <thead>
+       <tr>
+        <th rowspan="2"></th>
+        <th colspan="12">Bulan</th>
+       </tr>
+       <tr>
+        <th>Januari</th>
+        <th>Februari</th>
+        <th>Maret</th>
+        <th>April</th>
+        <th>Mei</th>
+        <th>Juni</th>
+        <th>Juli</th>
+        <th>Agustus</th>
+        <th>September</th>
+        <th>Oktober</th>
+        <th>November</th>
+        <th>Desember</th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>2022</td>
+        <td>4.017</td>
+        <td>6.135</td>
+        <td>7.091</td>
+        <td>5.841</td>
+        <td>5.036</td>
+        <td>4.547</td>
+        <td>3.467</td>
+        <td>3.970</td>
+        <td>6.313</td>
+        <td>3.595</td>
+        <td>9.207</td>
+        <td>5.945</td>
+       </tr>
+       <tr>
+        <td>2023</td>
+        <td>2.416</td>
+        <td>4.136</td>
+        <td>7.935</td>
+        <td>8.004</td>
+        <td>9.505</td>
+        <td>5.026</td>
+        <td>6.108</td>
+        <td>6.343</td>
+        <td>9.404</td>
+        <td>9.280</td>
+        <td>9.287</td>
+        <td>8.689</td>
+    </tr>
+      </tbody>
+    </table>
+   </div>
+   <div id="analytics-content" class="content">
+    <h2>Analytics Dashboard</h2>
+    <canvas id="salesChart"></canvas>
+   </div>
+   <div id="settings-content" class="content">
+    <h2>Settings</h2>
+   </div>
+  </div>
+  <script>
+   const homeLink = document.getElementById('home-link');
+   const analyticsLink = document.getElementById('analytics-link');
+   const settingsLink = document.getElementById('settings-link');
+   const homeContent = document.getElementById('home-content');
+   const analyticsContent = document.getElementById('analytics-content');
+   const settingsContent = document.getElementById('settings-content');
+
+   function hideAllContent() {
+     homeContent.style.display = 'none';
+     analyticsContent.style.display = 'none';
+     settingsContent.style.display = 'none';
+   }
+
+   homeLink.addEventListener('click', function (e) {
+     e.preventDefault();
+     hideAllContent();
+     homeContent.style.display = 'block';
+   });
+
+   analyticsLink.addEventListener('click', function (e) {
+     e.preventDefault();
+     hideAllContent();
+     analyticsContent.style.display = 'block';
+   });
+
+   settingsLink.addEventListener('click', function (e) {
+     e.preventDefault();
+     hideAllContent();
+     settingsContent.style.display = 'block';
+   });
+
+   hideAllContent();
+   homeContent.style.display = 'block';
+
+   const ctx = document.getElementById('salesChart').getContext('2d');
+   const salesChart = new Chart(ctx, {
+     type: 'bar',
+     data: {
+       labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+       datasets: [
+         {
+           label: '2022',
+           data: [4017, 6135, 7091, 5841, 5036, 4547, 3467, 3970, 6313, 3595, 9207, 5945],
+           backgroundColor: 'rgba(255, 99, 132, 0.2)',
+           borderColor: 'rgba(255, 99, 132, 1)',
+           borderWidth: 1,
+         },
+         {
+           label: '2023',
+           data: [2416, 4136, 7935, 8004, 9505, 5026, 6108, 6343, 9404, 9280, 9287, 8689],
+           backgroundColor: 'rgba(54, 162, 235, 0.2)',
+           borderColor: 'rgba(54, 162, 235, 1)',
+           borderWidth: 1
+         }
+       ],
+     },
+     options: {
+       responsive: true,
+       scales: {
+         y: {
+           beginAtZero: true,
+         },
+       },
+     },
+   });
+  </script>
+ </body>
+</html>
